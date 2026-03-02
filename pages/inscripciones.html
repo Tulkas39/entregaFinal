@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colegio Argentino</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <section class="header-logo">
+            <a href="#"><img class= "img-argentina" src="../assets/argentina.png" alt="logo de la página Argentina" class="d-none"></a>
+            <h1 class="header-title">Colegio Argentino</h1>
+            <a href="#"><img src="../assets/mate.png" alt= "logo de la página Mate"></a>
+        </section>
+        <!-- Barra de navegación con flexbox-->
+        <nav>
+            <ul class="navbar">
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="./nosotros.html">¿Quiénes somos?</a></li>
+                <li><a href="./oferta_educativa.html">Oferta educativa</a></li>
+                <li><a href="./comunidad.html">Comunidad</a></li>
+                <li><a href="./inscripciones.html">Inscripciones</a></li>
+                <li><a href="./registrodecalificaciones.html">Registro de Calificaciones</a></li>
+            </ul>
+        </nav>
+    </header> 
+    <main>
+
+        <!-- Forms con bootstrap-->
+        <h2 class="inscripcionesForm">Inscripciones</h2>
+        <p style="text-align: center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui dolore ipsa, consequatur voluptatibus in doloremque, repellendus blanditiis tenetur optio dignissimos fugiat minima esse aperiam et facilis repellat. Quasi, dolorem necessitatibus!Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui dolore ipsa, consequatur voluptatibus in doloremque, repellendus blanditiis tenetur optio dignissimos fugiat minima esse aperiam et facilis repellat. Quasi, dolorem necessitatibus!Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui dolore ipsa, consequatur voluptatibus in doloremque, repellendus blanditiis tenetur optio dignissimos fugiat minima esse aperiam et facilis repellat. Quasi, dolorem necessitatibus!Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui dolore ipsa, consequatur voluptatibus in doloremque, repellendus blanditiis tenetur optio dignissimos fugiat minima esse aperiam et facilis repellat. Quasi, dolorem necessitatibus!Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui dolore ipsa, consequatur voluptatibus in doloremque, repellendus blanditiis tenetur optio dignissimos fugiat minima esse aperiam et facilis repellat. Quasi, dolorem necessitatibus!Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui dolore ipsa, consequatur voluptatibus in doloremque, repellendus blanditiis tenetur optio dignissimos fugiat minima esse aperiam et facilis repellat. Quasi, dolorem necessitatibus!Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui dolore ipsa, consequatur voluptatibus in doloremque, repellendus blanditiis tenetur optio dignissimos fugiat minima esse aperiam et facilis repellat. Quasi, dolorem necessitatibus!Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui dolore ipsa, consequatur voluptatibus in doloremque, repellendus blanditiis tenetur optio dignissimos fugiat minima esse aperiam et facilis repellat. Quasi, dolorem necessitatibus!</p>
+        <br> 
+        <br> 
+        <h2 class="inscripcionesForm">¡Solicitá tu Inscripción!</h2>
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Nombre y apellido</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Emiliano Miranda">
+                <label for="exampleFormControlInput1" class="form-label">Documento Nacional de Identidad</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="123456789">
+                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="Armada Argentina 691">
+            </div>
+            <div class="col-12">
+                <label for="inputAddress2" class="form-label">Dirección 2</label>
+                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+            </div>
+            <div class="col-md-6">
+                <label for="inputCity" class="form-label">Ciudad</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="col-md-4">
+                <label for="inputState" class="form-label">Provincia</label>
+                <select id="inputState" class="form-select">
+                <option selected>Choose...</option>
+                <option>San Juan</option>
+                <option>Mendoza</option>
+                <option>San Luis</option>
+                </select>
+
+                <br>
+                <label for="exampleFormControlInput1" class="form-label">Modalidad a Elegir</label>
+                <br>
+                <input type="checkbox" class="btn-check" id="btn-check" autocomplete="off">
+                <label class="btn btn-primary" for="btn-check">Educación Primaria</label>
+                <input type="checkbox" class="btn-check" id="btn-check-2" checked autocomplete="off">
+                <label class="btn btn-primary" for="btn-check-2">Educación Secundaria</label>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">¿Por qué elige Colegio Argentino?</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Enviar Pre-Inscripción</button>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <section class="footer">
+            <div class="logo">
+                <a href= "#"> <img src="../assets/mate.png"></a>
+                <h2>Colegio Argentino</h2>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <p>colegioargentino@gmail.com</p>
+                <p>Dirección: Las Cañas 1217 Dorrego, Mendoza</p>
+            </div>
+            <div class="redesociales">
+                <h4>Redes Sociales</h4>
+                <a href="https://www.instagram.com/"><img src="../assets/instagram.png" alt="logo1"></img></a>
+                <a href="https://x.com/"><img src="../assets/twitter.png" alt="logo2"></img></a>
+                
+            </div>
+            <div class="logo">
+                <a href= "#"> <img class= "logoargentina" src="../assets/argentina.png"></a>
+                <h2>¡ Inscribite ya !</h2>
+            </div>
+        </section> 
+    </footer>     
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
+</body>
+</html>
