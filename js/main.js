@@ -116,14 +116,14 @@ const inputCalificacionFinal = document.getElementById("calificacionFinal");
 const buttonEnviarCalificacion = document.getElementById("enviarCalificacion")
 
 //agregaralumno
-function agregarAlumno(event){
+function agregarAlumno(){
     event.preventDefault();
     const selectordocentes = document.getElementById ('selectordocentes');
     const profesorId = parseInt(selectordocentes.value);
     const nombreAlumno = inputAlumnos.value.trim();
     const calificacion = parseFloat (inputCalificacionFinal.value);
     
-    const profesor = profesores.find(p => p.id === profesorId);
+    const profesor = profesores.find(profesor => profesor.id === profesorId);
     if (!profesorId){
         alert('Por favor selecciona un docente primero');
         return;
@@ -136,7 +136,7 @@ function agregarAlumno(event){
         alert('Por favor ingresa una calificación válida entre 1 y 10');
         return;
     }
-    const alumnoCargado = profesor.alumnos.find (a => a.nombre === nombreAlumno);
+    const alumnoCargado = profesor.alumnos.find (alumno => alumno.nombre === nombreAlumno);
     if (alumnoCargado) {
         alumnoCargado.calificaciones.push(calificacion);
         obtenerPromedio(alumnoCargado)   
@@ -179,11 +179,8 @@ function renderTabla(profesor) {
       <td>${profesor.materia}</td>
       <td>${alumno.calificaciones.join(', ')}</td>  
       <td class= "text-center">${promedio}</td>
-      <td>
-        <button class="btn-icon btn-edit" onclick="openEditModal(${i})" title="Editar">
-          <i class="bi bi-pencil"></i>
-        </button>
-        <button class="btn-icon btn-delete ms-1" onclick="deleteEmployee(${i})" title="Eliminar">
+      <td class= "text-center">
+        <button class="btn-icon btn-delete ms-1" title="Eliminar">
           <i class="bi bi-trash"></i>
         </button>
       </td>
@@ -211,6 +208,83 @@ function obtenerPromedio (nuevoAlumno) {
 }
 };
 buttonEnviarCalificacion.addEventListener ('click', agregarAlumno)
+
+//editar calificaciones
+
+const buttonEditarCalificaciones = document.getElementById ('editarCalificaciones')
+const menuAlumnos = document.getElementById ('menuAlumnos')
+
+function editarCalificaciones () {
+  const selectordocentes = document.getElementById ('selectordocentes');
+  const profesorId = parseInt(selectordocentes.value);
+
+    if (!profesorId){
+        alert('Por favor selecciona un docente primero');
+        return;
+    }
+    const profesor = profesores.find (profesor => profesor.id === profesorId);
+    if (!profesor) {
+      alert('Docente no encontrado');
+      return;
+    }
+    menuAlumnos.innerHTML = '';
+    
+    if (profesor.alumnos.length === 0) {
+      alert('Este docente no tiene alumnos cargados');
+      return
+    }
+     
+    profesor.alumnos.forEach ((alumno, i) => {
+      const optionAlumnos = document.createElement('option');
+      optionAlumnos.value = alumno.id;
+      optionAlumnos.textContent = alumno.nombre;
+      menuAlumnos.appendChild(optionAlumnos);
+  });
+  const modal = new bootstrap.Modal(document.getElementById('alumnosModal'));
+modal.show();
+}
+
+buttonEditarCalificaciones.addEventListener ('click', editarCalificaciones)
+
+//guardar calificacion del modal
+
+const inputNotas = document.getElementById ('notas')
+const buttonGuardarCalificacion = document.getElementById ('guardarCalificacion')
+
+
+function guardarCalificacion () {
+    const alumnoId = parseInt(menuAlumnos.value);
+    const calificacion = parseFloat(inputNotas.value);
+    
+    const selectordocentes = document.getElementById('selectordocentes');
+    const profesorId = parseInt(selectordocentes.value);
+    const profesor = profesores.find(p => p.id === profesorId);
+
+    if (!profesor) {
+        alert('Por favor selecciona un docente primero');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('alumnosModal'));
+        if (modal) modal.hide();
+        return;
+    }
+
+    const alumno = profesor.alumnos.find (alumno => alumno.id === alumnoId);
+    if (isNaN(calificacion) || calificacion < 1 || calificacion > 10) {
+        alert('Por favor ingresa una calificación válida entre 1 y 10');
+        return;
+    }
+
+    alumno.calificaciones.push(calificacion);
+    inputNotas.value = '';
+    guardardocenteLS();
+    obtenerPromedio(alumno);
+    renderTabla(profesor);
+
+    const modal = bootstrap.Modal.getInstance(document.getElementById('alumnosModal'));
+    modal.hide();
+  }
+
+buttonGuardarCalificacion.addEventListener ('click', guardarCalificacion)
+
 cargarDatosLS(); 
 cargarDocentes();
 
