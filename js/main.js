@@ -125,21 +125,50 @@ buttonAgregarProfesor.addEventListener('click', agregarProfesor);
 
 //agregar docentes al menú selector
 function cargarDocentes() {
-  const selectordocentes = document.getElementById('selectordocentes')
-  selectordocentes.innerHTML = '';
+  const selectorDocentes = document.getElementById('selectorDocentes')
+  selectorDocentes.innerHTML = '';
   profesores.forEach((profesor) => {
     const option             = document.createElement('option');
           option.value       = profesor.id;
           option.textContent = `${profesor.nombre} - ${profesor.materia}`;
-    selectordocentes.appendChild(option);
+    selectorDocentes.appendChild(option);
   });
 }
 
+//eliminar docente del menú selector
+
+const buttonEliminarProfesor = document.getElementById ("eliminarProfesor")
+
+function eliminarProfesor() {
+  const selectorDocentes = document.getElementById ("selectorDocentes");
+  const profesorId = parseInt(selectorDocentes.value)
+
+  if (!profesorId) {
+    alert('Por favor, selecciona un docente primero')
+    return;
+  }
+  const profesor = profesores.find(profesor => profesor.id === profesorId);
+  const confirmar = confirm(`Estás seguro de eliminar a ${profesor.nombre}?`)
+
+  if (!confirmar) return;
+
+  const index = profesores.findIndex (profesor => profesor.id === profesorId);
+  profesores.splice (index, 1);
+
+  alumnosTabla.innerHTML = '';
+  mensajeVacio.classList.remove('d-none');
+
+  guardardocenteLS();
+  cargarDocentes();
+}
+
+buttonEliminarProfesor.addEventListener('click', eliminarProfesor);
+
 //seleccionar docente
-document.getElementById('selectordocentes').addEventListener('change', function () {
+document.getElementById('selectorDocentes').addEventListener('change', function () {
   const profesorId = parseInt(this.value);
   if (profesorId) {
-    const profesor = profesores.find(p => p.id === profesorId);
+    const profesor = profesores.find(profesor => profesor.id === profesorId);
     renderTabla(profesor);
   }
 }
@@ -152,8 +181,8 @@ const buttonEnviarCalificacion = document.getElementById("enviarCalificacion")
 //agregaralumno
 function agregarAlumno() {
   event.preventDefault();
-  const selectordocentes = document.getElementById('selectordocentes');
-  const profesorId = parseInt(selectordocentes.value);
+  const selectorDocentes = document.getElementById('selectorDocentes');
+  const profesorId = parseInt(selectorDocentes.value);
   const nombreAlumno = inputAlumnos.value.trim();
   const calificacion = parseFloat(inputCalificacionFinal.value);
 
@@ -216,11 +245,20 @@ function renderTabla(profesor) {
       <td>${alumno.calificaciones.join(', ')}</td>  
       <td class= "text-center">${promedio}</td>
       <td class= "text-center">
-        <button class="btn-icon btn-delete ms-1" title="Eliminar">
+        <button class="btn-icon btn-delete ms-1" title="Eliminar" data-id="${alumno.id}">
           <i class="bi bi-trash"></i>
         </button>
       </td>
     `;
+    tr.querySelector('.btn-delete').addEventListener('click', () => {
+    const confirmar = confirm(`¿Estás seguro de borrar las calificaciones de ${alumno.nombre}?`);
+    if (!confirmar) return;
+
+    alumno.calificaciones = []; 
+
+    guardardocenteLS();
+    renderTabla(profesor);
+});
     alumnosTabla.appendChild(tr);
   });
 }
@@ -251,8 +289,8 @@ const buttonEditarCalificaciones = document.getElementById('editarCalificaciones
 const menuAlumnos = document.getElementById('menuAlumnos')
 
 function editarCalificaciones() {
-  const selectordocentes = document.getElementById('selectordocentes');
-  const profesorId = parseInt(selectordocentes.value);
+  const selectorDocentes = document.getElementById('selectorDocentes');
+  const profesorId = parseInt(selectorDocentes.value);
 
   if (!profesorId) {
     alert('Por favor selecciona un docente primero');
@@ -282,6 +320,41 @@ function editarCalificaciones() {
 
 buttonEditarCalificaciones.addEventListener('click', editarCalificaciones)
 
+//eliminar alumno
+
+const buttonEliminarAlumno = document.getElementById ("eliminarAlumno")
+
+function eliminarAlumno() {
+  const selectorDocentes = document.getElementById('selectorDocentes');
+  const profesorId = parseInt(selectorDocentes.value);
+  const profesor = profesores.find(profesor => profesor.id === profesorId);
+  const menuAlumnos = document.getElementById('menuAlumnos');
+  const alumnoId = parseInt(menuAlumnos.value);
+
+  if (!alumnoId) {
+    alert('Por favor, selecciona un alumno primero')
+    return;
+  }
+  const alumno= profesor.alumnos.find(alumno => alumno.id === alumnoId);
+  const confirmar = confirm(`Estás seguro de eliminar a ${alumno.nombre}?`)
+
+  if (!confirmar) return;
+
+  const index = profesor.alumnos.findIndex (alumno => alumno.id === alumnoId);
+  profesor.alumnos.splice (index, 1);
+
+  alumnosTabla.innerHTML = '';
+  mensajeVacio.classList.remove('d-none');
+
+  guardardocenteLS();
+  renderTabla(profesor);
+  
+  const modal = bootstrap.Modal.getInstance(document.getElementById('alumnosModal'));
+  if (modal) modal.hide();
+}
+
+buttonEliminarAlumno.addEventListener('click', eliminarAlumno);
+
 //guardar calificacion del modal
 
 const inputNotas = document.getElementById('notas')
@@ -292,8 +365,8 @@ function guardarCalificacion() {
   const alumnoId = parseInt(menuAlumnos.value);
   const calificacion = parseFloat(inputNotas.value);
 
-  const selectordocentes = document.getElementById('selectordocentes');
-  const profesorId = parseInt(selectordocentes.value);
+  const selectorDocentes = document.getElementById('selectorDocentes');
+  const profesorId = parseInt(selectorDocentes.value);
   const profesor = profesores.find(p => p.id === profesorId);
 
   if (!profesor) {

@@ -47,8 +47,8 @@
       <div class="row mb-3">
         <div class="col-12">
           <div class="form-group">
-            <label for="selectordocentes">Seleccionar Docente</label>
-            <select multiple class="form-control" id="selectordocentes">
+            <label for="selectorDocentes">Seleccionar Docente</label>
+            <select multiple class="form-control" id="selectorDocentes">
             </select>
           </div>
         </div>
@@ -67,8 +67,11 @@
             <input type="text" class="form-control mb-3" id="materia" placeholder="Ingrese la materia que imparte">
             <div class="alert alert-warning py-1 d-none" id="validadorMateria">❌ Alerta genérica</div>
           </div>
-          <button type="submit" class="btn btn-primary mb-3" id="registrarProfesor">Guardar Nuevo Profesor</button>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary mb-3 w-15 h-25" id="registrarProfesor">Guardar Nuevo Profesor</button>
+            <button class="btn btn-danger w-15 h-25" id="eliminarProfesor">Eliminar Profesor</button>
         </div>
+        
       </div>
 
       <div class="mb-3">
@@ -84,7 +87,7 @@
           <label for="calificacionFinal" class="form-label">Colocar Calificación</label>
           <input type="text" class="form-control mb-3" id="calificacionFinal" placeholder="Ingrese la Calificación Final">
           <div class="alert alert-warning py-1 d-none" id="validadorCalificaciónFinal">❌ Alerta genérica</div>
-          <button type="submit" class="btn btn-primary" id="enviarCalificacion">Guardar - Promedio Parcial</button>
+          <button type="submit" class="btn btn-primary" id="enviarCalificacion">Guardar Alumno</button>
         </div>
       </div>
 
@@ -93,7 +96,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h4>Lista de Alumnos Calificados</h4>
           <button class="btn btn-add" id="editarCalificaciones">
-            <i class="bi bi-plus-lg me-1"></i> Editar Calificaciones
+            <i class="bi bi-plus-lg me-1"></i> Editar Alumnos
           </button>
         </div>
 
@@ -138,8 +141,10 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-save px-4" id="guardarCalificacion">Guardar</button>
+              <button type="button" class="btn btn-save px-4" id="guardarCalificacion">Calificar</button>
+              <button class="btn btn-danger" id="eliminarAlumno">Eliminar Alumno</button>
             </div>
+
           </div>
         </div>
       </div>
