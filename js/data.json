@@ -1,0 +1,208 @@
+The following image can be moved on the page using keyboard controls (left, right, up, down)
+const profesores = [
+  {
+    id: 1,
+    nombre: "Emiliano Miranda",
+    materia: "Ciencias Sociales",
+    alumnos: [
+      {
+        id: 101,
+        nombre: "Victoria Stalloca",
+        calificaciones: [8, 9, 7, 8]
+      },
+      {
+        id: 102,
+        nombre: "Altair Grifith",
+        calificaciones: [9, 9, 10, 9]
+      },
+      {
+        id: 103,
+        nombre: "Juan Carlos",
+        calificaciones: [7, 6, 8, 7]
+      }
+    ]
+  },
+  {
+    id: 2,
+    nombre: "Victor Díaz",
+    materia: "Programación",
+    alumnos: [
+      {
+        id: 101,
+        nombre: "Ruben Ortega",
+        calificaciones: [8, 8, 9]
+      },
+      {
+        id: 104,
+        nombre: "Vanina Díaz",
+        calificaciones: [9, 8, 9]
+      }
+    ]
+  }
+];
+Mostrar más
+14:29
+Aquí tienes el análisis de los datos de los profesores y sus alumnos:
+
+javascript
+const profesores = [
+  {
+    id: 1,
+    nombre: "Emiliano Miranda",
+    materia: "Ciencias Sociales",
+    alumnos: [
+      { id: 101, nombre: "Victoria Stalloca", calificaciones: [8, 9, 7, 8] },
+      { id: 102, nombre: "Altair Grifith", calificaciones: [9, 9, 10, 9] },
+      { id: 103, nombre: "Juan Carlos", calificaciones: [7, 6, 8, 7] }
+    ]
+  },
+  {
+    id: 2,
+    nombre: "Victor Díaz",
+    materia: "Programación",
+    alumnos: [
+      { id: 101, nombre: "Ruben Ortega", calificaciones: [8, 8, 9] },
+      { id: 104, nombre: "Vanina Díaz", calificaciones: [9, 8, 9] }
+    ]
+  }
+];
+
+// 1. Promedio de calificaciones por alumno
+const promediosPorAlumno = profesores.map(prof => ({
+  profesor: prof.nombre,
+  materia: prof.materia,
+  alumnos: prof.alumnos.map(alumno => ({
+    nombre: alumno.nombre,
+    promedio: (alumno.calificaciones.reduce((a, b) => a + b, 0) / alumno.calificaciones.length).toFixed(2)
+  }))
+}));
+
+console.log("=== Promedios por alumno ===");
+promediosPorAlumno.forEach(prof => {
+  console.log(`\nProf. ${prof.profesor} - ${prof.materia}`);
+  prof.alumnos.forEach(a => console.log(`  ${a.nombre}: ${a.promedio}`));
+});
+
+// 2. Promedio general por profesor
+const promedioPorProfesor = profesores.map(prof => {
+  const todasLasCalif = prof.alumnos.flatMap(a => a.calificaciones);
+  const promedio = (todasLasCalif.reduce((a, b) => a + b, 0) / todasLasCalif.length).toFixed(2);
+  return { profesor: prof.nombre, materia: prof.materia, promedioGeneral: promedio };
+});
+
+console.log("\n=== Promedio general por profesor ===");
+promedioPorProfesor.forEach(p => console.log(`${p.profesor} (${p.materia}): ${p.promedioGeneral}`));
+
+// 3. Mejor alumno por profesor
+const mejorAlumnoPorProfesor = profesores.map(prof => {
+  const mejor = prof.alumnos.reduce((prev, curr) => {
+    const promPrev = prev.calificaciones.reduce((a, b) => a + b, 0) / prev.calificaciones.length;
+    const promCurr = curr.calificaciones.reduce((a, b) => a + b, 0) / curr.calificaciones.length;
+    return promCurr > promPrev ? curr : prev;
+  });
+  return { profesor: prof.nombre, mejorAlumno: mejor.nombre };
+});
+
+console.log("\n=== Mejor alumno por profesor ===");
+mejorAlumnoPorProfesor.forEach(p => console.log(`${p.profesor}: ${p.mejorAlumno}`));
+Resultados esperados:
+
+Alumno	Materia	Promedio
+Victoria Stalloca	Cs. Sociales	8.00
+Altair Grifith	Cs. Sociales	9.25 ⭐
+Juan Carlos	Cs. Sociales	7.00
+Ruben Ortega	Programación	8.33
+Vanina Díaz	Programación	8.67 ⭐
+Promedio general de Emiliano Miranda: 8.08
+Promedio general de Victor Díaz: 8.50
+Mejor alumno de cada profesor: Altair Grifith y Vanina Díaz ⭐
+¿Querés que agregue algún análisis extra, como alumnos con nota mínima o máxima, o exportarlo a otro formato?
+
+Me podrías transformar este objeto a un json?
+
+14:29
+
+Ejecutó un comando, leyó un archivo
+Ejecutó un comando, leyó un archivo
+¡Listo! Los cambios principales respecto al objeto JS original son que las claves van entre comillas dobles y se eliminó la declaración const. El array quedó envuelto en un objeto raíz "profesores" para que sea un JSON válido y bien estructurado.
+
+Profesores
+Código · JSON 
+
+
+¿Quieres recibir una notificación cuando Claude responda?
+
+
+
+Claude es IA y puede cometer errores. Por favor, verifica las respuestas.
+Profesores · JSON
+Copiar
+
+{
+  "profesores": [
+    {
+      "id": 1,
+      "nombre": "Emiliano Miranda",
+      "materia": "Ciencias Sociales",
+      "alumnos": [
+        {
+          "id": 101,
+          "nombre": "Victoria Stalloca",
+          "calificaciones": [
+            8,
+            9,
+            7,
+            8
+          ]
+        },
+        {
+          "id": 102,
+          "nombre": "Altair Grifith",
+          "calificaciones": [
+            9,
+            9,
+            10,
+            9
+          ]
+        },
+        {
+          "id": 103,
+          "nombre": "Juan Carlos",
+          "calificaciones": [
+            7,
+            6,
+            8,
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "Victor Díaz",
+      "materia": "Programación",
+      "alumnos": [
+        {
+          "id": 101,
+          "nombre": "Ruben Ortega",
+          "calificaciones": [
+            8,
+            8,
+            9
+          ]
+        },
+        {
+          "id": 104,
+          "nombre": "Vanina Díaz",
+          "calificaciones": [
+            9,
+            8,
+            9
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+Hi, I’m Claude. How can I help you today?Hi, I’m Claude. How can I help you today?
