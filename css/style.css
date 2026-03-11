@@ -329,6 +329,11 @@ footer section p{
       font-size: 0.95rem;
     }
 
+    .swal2-title {
+    background-color: transparent !important;
+    color: inherit !important;
+    margin: 0 !important;
+}
 
 /* Media Query aplicado a Index y a Oferta Educativa*/
 

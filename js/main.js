@@ -85,10 +85,6 @@ function validarCampo(input, alerta, nombreCampo){
   return true;
 }
 
-
-
-
-
 //funcion agregar profesores
 const inputProfesores       = document.getElementById('nombreDocente')
 const inputMateria          = document.getElementById('materia')
@@ -137,22 +133,56 @@ function eliminarProfesor() {
   const profesorId = parseInt(selectorDocentes.value)
 
   if (!profesorId) {
-    alert('Por favor, selecciona un docente primero')
+    Swal.fire({
+      icon: 'warning',
+      title: 'Atención',
+      text: 'Por favor selecciona un docente primero',
+      customClass: {
+      title: 'titulo-blanco'},
+      confirmButtonText: 'Entendido',
+      showClass: {
+    popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+  },
+  hideClass: {
+    popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+  }
+});
     return;
   }
   const profesor = profesores.find(profesor => profesor.id === profesorId);
-  const confirmar = confirm(`Estás seguro de eliminar a ${profesor.nombre}?`)
-
-  if (!confirmar) return;
-
-  const index = profesores.findIndex (profesor => profesor.id === profesorId);
-  profesores.splice (index, 1);
-
-  document.getElementById('alumnosTabla').innerHTML = '';
-  document.getElementById('mensajeVacio').classList.remove('d-none');
+  const confirmar = Swal.fire({
+      title: `Estás seguro de eliminar a ${profesor.nombre}?`,
+      text: "No se podrá revertir",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, quiero borrarlo!"
+    }).then((result) => {
+    if (!result.isConfirmed) return;
+    const index = profesores.findIndex (profesor => profesor.id === profesorId);
+    profesores.splice (index, 1);
+      
+    document.getElementById('alumnosTabla').innerHTML = '';
+    document.getElementById('mensajeVacio').classList.remove('d-none');
 
   guardardocenteLS();
   cargarDocentes();
+    
+    Swal.fire({
+          title: "Borrado",
+          text: "El profesor ha sido borrado",
+          icon: "success"
+        });
+        });
 }
 
 buttonEliminarProfesor.addEventListener('click', eliminarProfesor);
@@ -179,7 +209,28 @@ function agregarAlumno(event) {
   const profesorId = parseInt(selectorDocentes.value);
   
   if (!profesorId) {
-    alert('Por favor selecciona un docente primero');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Atención',
+      text: 'Por favor selecciona un docente primero',
+      customClass: {
+      title: 'titulo-blanco'},
+      confirmButtonText: 'Entendido',
+      showClass: {
+    popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+  },
+  hideClass: {
+    popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+  }
+});
     return;
   }
   const alumnoValido = validarCampo(inputAlumnos, alertaAlumno, "Nombre del Alumno");
@@ -245,19 +296,29 @@ function renderTabla(profesor) {
         </button>
       </td>
     `;
+  
     tr.querySelector('.btn-delete').addEventListener('click', () => {
-    const confirmar = confirm(`¿Estás seguro de borrar las calificaciones de ${alumno.nombre}?`);
-    if (!confirmar) return;
+    const confirmar = Swal.fire({
+      title: `¿Estás seguro de borrar las calificaciones de ${alumno.nombre}?`,
+      text: "No se podrá revertir",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, quiero borrarlo!"
+    }).then((result) => {
+    if (!result.isConfirmed) return;
 
     alumno.calificaciones = []; 
 
     guardardocenteLS();
     renderTabla(profesor);
 });
-    alumnosTabla.appendChild(tr);
-  });
-}
 
+  });
+      alumnosTabla.appendChild(tr);
+});
+}
 //funcion aprobar/desaprobar alumno
 
 function obtenerPromedio(alumno) {
@@ -283,20 +344,59 @@ const menuAlumnos = document.getElementById('menuAlumnos')
 function editarCalificaciones() {
   const selectorDocentes = document.getElementById('selectorDocentes');
   const profesorId = parseInt(selectorDocentes.value);
+  const profesor = profesores.find(p => p.id === profesorId);
 
   if (!profesorId) {
-    alert('Por favor selecciona un docente primero');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Atención',
+      text: 'Por favor selecciona un docente primero',
+      customClass: {
+      title: 'titulo-blanco'},
+      confirmButtonText: 'Entendido',
+      showClass: {
+    popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+  },
+  hideClass: {
+    popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+  }
+});
     return;
   }
-  const profesor = profesores.find(profesor => profesor.id === profesorId);
-  if (!profesor) {
-    alert('Docente no encontrado');
-    return;
-  }
+
   menuAlumnos.innerHTML = '';
 
   if (profesor.alumnos.length === 0) {
-    alert('Este docente no tiene alumnos cargados');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Atención',
+      text: 'Este docente no tiene alumnos cargados',
+      customClass: {
+      title: 'titulo-blanco'},
+      confirmButtonText: 'Entendido',
+      showClass: {
+    popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+  },
+  hideClass: {
+    popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+  }
+});
     return
   }
 
@@ -322,27 +422,51 @@ function eliminarAlumno() {
   const alumnoId = parseInt(menuAlumnos.value);
 
   if (!alumnoId) {
-    alert('Por favor, selecciona un alumno primero')
+    Swal.fire({
+      icon: 'warning',
+      title: 'Atención',
+      text: 'Por favor selecciona un alumno primero',
+      customClass: {
+      title: 'titulo-blanco'},
+      confirmButtonText: 'Entendido',
+      showClass: {
+    popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+  },
+  hideClass: {
+    popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+  }
+});
     return;
   }
   const alumno= profesor.alumnos.find(alumno => alumno.id === alumnoId);
-  const confirmar = confirm(`Estás seguro de eliminar a ${alumno.nombre}?`)
+  const confirmar =  Swal.fire({
+      title: `Estás seguro de eliminar a ${alumno.nombre}?`,
+      text: "No se podrá revertir",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, quiero borrarlo!"
+    }).then((result) => {
+    if (!result.isConfirmed) return;
 
-  if (!confirmar) return;
+    const index = profesor.alumnos.findIndex (alumno => alumno.id === alumnoId);
+    profesor.alumnos.splice (index, 1);
 
-  const index = profesor.alumnos.findIndex (alumno => alumno.id === alumnoId);
-  profesor.alumnos.splice (index, 1);
-
-
-
-  guardardocenteLS();
-  renderTabla(profesor);
-
-  
-  const modal = bootstrap.Modal.getInstance(document.getElementById('alumnosModal'));
-  if (modal) modal.hide();
-
-}
+    guardardocenteLS();
+    renderTabla(profesor);
+    const modal = bootstrap.Modal.getInstance(document.getElementById('alumnosModal'));
+    if (modal) modal.hide();
+    });
+    }
 
 buttonEliminarAlumno.addEventListener('click', eliminarAlumno);
 
@@ -358,19 +482,33 @@ function guardarCalificacion() {
   const profesorId = parseInt(selectorDocentes.value);
   const profesor = profesores.find(p => p.id === profesorId);
 
-  if (!profesor) {
-    alert('Por favor selecciona un docente primero');
-    const modal = bootstrap.Modal.getInstance(document.getElementById('alumnosModal'));
-    if (modal) modal.hide();
-    return;
-  }
-
-  const alumnoId = parseInt(menuAlumnos.value);
+   const alumnoId = parseInt(menuAlumnos.value);
   const calificacion = parseFloat(inputNotas.value);
 
   const alumno = profesor.alumnos.find(alumno => alumno.id === alumnoId);
   if (isNaN(calificacion) || !Number.isInteger(Number(calificacion))|| calificacion < 1 || calificacion > 10) {
-    alert('Por favor ingresa una calificación válida entre 1 y 10. Colocar números enteros.');
+    Swal.fire({
+      icon: 'warning',
+      title: 'Atención',
+      text: 'Por favor coloca una cafalificación válida entre 1 y 10 (números enteros)',
+      customClass: {
+      title: 'titulo-blanco'},
+      confirmButtonText: 'Entendido',
+      showClass: {
+    popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+  },
+  hideClass: {
+    popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+  }
+});
     return;
   }
 
