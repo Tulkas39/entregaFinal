@@ -341,7 +341,7 @@ function renderTabla(profesor) {
     tr.innerHTML = `
       <td data-label="Alumno">${alumno.nombre}</td>
       <td data-label="Materia">${profesor.materia}</td>
-      <td data-label="Calificaciones">${alumno.calificaciones.join(', ')}</td>
+      <td data-label="Calificaciones">${alumno.calificaciones.length > 0 ? alumno.calificaciones.join(', ') : 'Sin calificaciones'}</td>
       <td data-label="Promedio" class="text-center">${promedio}</td>
       <td data-label="Acciones" class="text-center">
         <button class="btn-icon btn-delete ms-1" title="Eliminar" data-id="${alumno.id}">

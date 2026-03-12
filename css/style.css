@@ -243,7 +243,50 @@ footer section p{
       background-color: #1ea8c2;
       color: white;
     }
+    .alumnosTabla thead {
+    display: none;
+  } 
+    #alumnosTabla thead,
+    table thead {
+        display: none;
+    }
+    
+    #alumnosTabla tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        background: #fff;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
 
+    #alumnosTabla td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.4rem 0.25rem;
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 0.9rem;
+  }
+
+    #alumnosTabla td:last-child {
+        border-bottom: none;
+    }
+
+
+    #alumnosTabla td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6c757d;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        flex-shrink: 0;
+        margin-right: 0.5rem;
+    }
+    
     .table {
       margin-top: 1.2rem;
     }
@@ -285,7 +328,7 @@ footer section p{
     .btn-edit { color: #e8a020; }
     .btn-delete { color: #e53e3e; }
 
-    /* Modal styling */
+ 
     .modal-header {
       border-bottom: 1px solid #e2e8f0;
     }
@@ -404,49 +447,50 @@ header section a img {
 }
 @media (max-width: 768px) {
 
-  /* Ocultar el encabezado de la tabla */
-  #alumnosTabla thead {
+    .alumnosTabla thead {
     display: none;
+  } 
+    #alumnosTabla thead,
+    table thead {
+        display: none;
+    }
+    
+    #alumnosTabla tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+        padding: 0.75rem;
+        background: #fff;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    #alumnosTabla td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.4rem 0.25rem;
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 0.9rem;
   }
 
-  /* Cada fila se convierte en una card */
-  #alumnosTabla tr {
-    display: block;
-    margin-bottom: 1rem;
-    border: 1px solid #dee2e6;
-    border-radius: 0.5rem;
-    padding: 0.75rem;
-    background: #fff;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  }
+    #alumnosTabla td:last-child {
+        border-bottom: none;
+    }
 
-  /* Cada celda se apila verticalmente */
-  #alumnosTabla td {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.4rem 0.25rem;
-    border: none;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 0.9rem;
-  }
 
-  #alumnosTabla td:last-child {
-    border-bottom: none;
-  }
-
-  /* Label generado con data-label en cada td */
-  #alumnosTabla td::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: #6c757d;
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    flex-shrink: 0;
-    margin-right: 0.5rem;
-  }
-}
+    #alumnosTabla td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6c757d;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        flex-shrink: 0;
+        margin-right: 0.5rem;
+    }
+    }
 @media (max-width: 425px) {
     
     .mainsection-grids{
