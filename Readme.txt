@@ -1,3 +1,5 @@
+Alumno: Emiliano Miranda
+
 El objetivo del trabajo fue hacer un sistema de carga de calificaciones:
 
 - Donde cada profesor pueda visualizarse en un selector.

@@ -328,7 +328,10 @@ function renderTabla(profesor) {
  
 
   profesor.alumnos.forEach((alumno, i) => {
-    const promedio = (alumno.calificaciones.reduce((sum, n) => sum + n, 0) / alumno.calificaciones.length).toFixed(2);
+    
+  const promedio = alumno.calificaciones.length === 0
+  ? 'Sin calificaciones'
+  : (alumno.calificaciones.reduce((sum, n) => sum + n, 0) / alumno.calificaciones.length).toFixed(2);
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${alumno.nombre}</td>
@@ -374,7 +377,7 @@ function obtenerPromedio(alumno) {
   const promedio           = alumno.calificaciones.reduce((sum, n) => sum + n, 0) / alumno.calificaciones.length;
   const promedioRedondeado = promedio.toFixed(2);
   const estado             = promedio >= 7 ? 'APROBADO' : 'DESAPROBADO';
-
+  
   mensajeCalificacionFinal.innerHTML =
     `${alumno.nombre} está <strong>${estado}</strong> con una calificación promedio de ${promedioRedondeado}`;
   }
