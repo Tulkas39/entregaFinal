@@ -74,26 +74,31 @@ function cargarDatosAPI() {
 });
 }
 
-function renderProfesores(data) {
-   const datosAPI = data.record;
-        profesores.length = 0;
-
-        datosAPI.forEach(dato => {
-            const alumnos = (dato.alumnos || []).map(alumnoData => {
-                const alumno = new Alumno(alumnoData.nombre, alumnoData.calificaciones);
-                alumno.id = alumnoData.id;
-                return alumno;
-            });
-            const profesor = new Profesor(dato.nombre, dato.materia, alumnos);
-            profesor.id = dato.id;
-            profesores.push(profesor);
-        });
-
-        Profesor.id = Math.max(...profesores.map(p => p.id), 0);
-        Alumno.id   = Math.max(...profesores.flatMap(p => p.alumnos.map(a => a.id)), 0);
-        cargarDocentes();
+function crearProfesor(dato) {
+    const alumnos = dato.alumnos.map(crearAlumno);
+    const profesor = new Profesor(dato.nombre, dato.materia, alumnos);
+    profesor.id = dato.id;
+    return profesor;
 }
 
+function crearAlumno(alumnoData) {
+    const alumno = new Alumno(alumnoData.nombre, alumnoData.calificaciones);
+    alumno.id = alumnoData.id;
+    return alumno;
+}
+
+
+
+function renderProfesores(data) {
+    const datosAPI = data.record;
+    profesores.length = 0;
+
+    profesores.push(...datosAPI.map(crearProfesor));
+
+    Profesor.id = Math.max(...profesores.map(p => p.id), 0);
+    Alumno.id   = Math.max(...profesores.flatMap(p => p.alumnos.map(a => a.id)), 0);
+    cargarDocentes();
+}
 
 //Selectores de validadores
 const alertaDocente      = document.getElementById("validadorDocente");
@@ -334,16 +339,16 @@ function renderTabla(profesor) {
   : (alumno.calificaciones.reduce((sum, n) => sum + n, 0) / alumno.calificaciones.length).toFixed(2);
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${alumno.nombre}</td>
-      <td>${profesor.materia}</td>
-      <td>${alumno.calificaciones.join(', ')}</td>  
-      <td class= "text-center">${promedio}</td>
-      <td class= "text-center">
+      <td data-label="Alumno">${alumno.nombre}</td>
+      <td data-label="Materia">${profesor.materia}</td>
+      <td data-label="Calificaciones">${alumno.calificaciones.join(', ')}</td>
+      <td data-label="Promedio" class="text-center">${promedio}</td>
+      <td data-label="Acciones" class="text-center">
         <button class="btn-icon btn-delete ms-1" title="Eliminar" data-id="${alumno.id}">
           <i class="bi bi-trash"></i>
         </button>
       </td>
-    `;
+`;
   
     tr.querySelector('.btn-delete').addEventListener('click', () => {
     const confirmar = Swal.fire({
