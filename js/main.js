@@ -343,10 +343,15 @@ function renderTabla(profesor) {
       <td data-label="Materia">${profesor.materia}</td>
       <td data-label="Calificaciones">${alumno.calificaciones.length > 0 ? alumno.calificaciones.join(', ') : 'Sin calificaciones'}</td>
       <td data-label="Promedio" class="text-center">${promedio}</td>
-      <td data-label="Acciones" class="text-center">
-        <button class="btn-icon btn-delete ms-1" title="Eliminar" data-id="${alumno.id}">
-          <i class="bi bi-trash"></i>
-        </button>
+      <td data-label="Acciones" class="text-left">
+         <div class="d-flex gap-1">
+            <button class="btn-icon btn-edit" title="Editar" data-id="${alumno.id}">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn-icon btn-delete" title="Eliminar" data-id="${alumno.id}">
+                <i class="bi bi-eraser"></i>
+            </button>
+        </div>
       </td>
 `;
   
@@ -362,13 +367,51 @@ function renderTabla(profesor) {
     }).then((result) => {
     if (!result.isConfirmed) return;
 
-    alumno.calificaciones = []; 
-
+    alumno.calificaciones = [];
     guardardocenteLS();
     renderTabla(profesor);
-});
+    });
+  }); 
+    
+    tr.querySelector('.btn-edit').addEventListener('click', () => {
+  Swal.fire({
+    title: `Agregar calificación a ${alumno.nombre}`,
+    input: 'number',
+    inputLabel: 'Ingresá una calificación entre 1 y 10',
+    inputPlaceholder: 'Ej: 8',
+    inputAttributes: {
+      min: 1,
+      max: 10,
+      step: 1
+    },
+    showCancelButton: true,
+    confirmButtonText: 'Guardar',
+    cancelButtonText: 'Cancelar',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    showClass: {
+      popup: 'animate__animated animate__fadeInUp animate__faster'
+    },
+    hideClass: {
+      popup: 'animate__animated animate__fadeOutDown animate__faster'
+    },
+    inputValidator: (value) => {
+      const num = Number(value);
+      if (!value) return '❌ No puede estar vacío';
+      if (!Number.isInteger(num) || num < 1 || num > 10) {
+        return '❌ Ingresá un número entero entre 1 y 10';
+      }
+    }
+  }).then((result) => {
+    if (!result.isConfirmed) return;
 
+    alumno.calificaciones.push(Number(result.value));
+    
+    obtenerPromedio(alumno);
+    guardardocenteLS();
+    renderTabla(profesor);
   });
+});
       alumnosTabla.appendChild(tr);
 });
 }
