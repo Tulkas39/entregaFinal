@@ -333,7 +333,34 @@ footer section p{
     background-color: transparent !important;
     color: inherit !important;
     margin: 0 !important;
+
 }
+    .swal2-popup {
+    width: auto !important;
+    max-width: 90vw !important;
+    font-size: 0.875rem !important;
+    padding: 1rem !important;
+    }
+
+    .swal2-title {
+    font-size: 1.1rem !important;
+    padding: 0.5rem 0 !important;
+    }
+
+    .swal2-html-container {
+    font-size: 0.85rem !important;
+    margin: 0.3rem 0 !important;
+    }
+
+    .swal2-actions {
+    gap: 0.5rem !important;
+    margin-top: 0.75rem !important;
+    }
+
+    .swal2-confirm, .swal2-cancel {
+    padding: 0.4rem 1rem !important;
+    font-size: 0.85rem !important;
+    }
 
 /* Media Query aplicado a Index y a Oferta Educativa*/
 

@@ -49,6 +49,51 @@ function cargarDatosLS() {
     cargarDocentes();
   }
 } 
+const URL = "https://api.jsonbin.io/v3/b/69b219c6c3097a1dd51a3a4c"
+
+function cargarDatosAPI() {
+  fetch(URL, { 
+    headers: {
+      "X-Master-Key": "$2a$10$ZRxWBEGUkHqUPjnM8/nGAud1MH3gveDAUh.MN4Gp2nyzQdGawvJuK",
+      "X-Access-Key": "$2a$10$FGiUPQ3Zi5e9jsJaLCE4LOVKj99zrqP5fXOqglblbjItcjPJMzUV."
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    try {                          
+      renderProfesores(data)
+    
+    } catch (error) {             
+        console.error("Error al procesar los datos de la API:", error);
+        cargarDatosLS();
+    }
+})
+.catch(error => {
+    console.error("Error al conectar con la API:", error);
+    cargarDatosLS();
+});
+}
+
+function renderProfesores(data) {
+   const datosAPI = data.record;
+        profesores.length = 0;
+
+        datosAPI.forEach(dato => {
+            const alumnos = (dato.alumnos || []).map(alumnoData => {
+                const alumno = new Alumno(alumnoData.nombre, alumnoData.calificaciones);
+                alumno.id = alumnoData.id;
+                return alumno;
+            });
+            const profesor = new Profesor(dato.nombre, dato.materia, alumnos);
+            profesor.id = dato.id;
+            profesores.push(profesor);
+        });
+
+        Profesor.id = Math.max(...profesores.map(p => p.id), 0);
+        Alumno.id   = Math.max(...profesores.flatMap(p => p.alumnos.map(a => a.id)), 0);
+        cargarDocentes();
+}
+
 
 //Selectores de validadores
 const alertaDocente      = document.getElementById("validadorDocente");
@@ -526,7 +571,9 @@ buttonGuardarCalificacion.addEventListener('click', guardarCalificacion)
 
 cargarDatosLS();
 cargarDocentes();
-
+if (localStorage.getItem("profesores") === null) {
+  cargarDatosAPI();
+}
 
 
 
