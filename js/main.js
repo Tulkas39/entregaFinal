@@ -346,7 +346,7 @@ function renderTabla(profesor) {
       <td data-label="Acciones" class="text-left">
          <div class="d-flex gap-1">
             <button class="btn-icon btn-edit" title="Editar" data-id="${alumno.id}">
-                <i class="bi-plus-lg text-success"></i>
+                <i class="bi bi-plus-circle text-success"></i>
             </button>
             <button class="btn-icon btn-delete" title="Eliminar" data-id="${alumno.id}">
                 <i class="bi bi-eraser"></i>
