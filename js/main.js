@@ -337,12 +337,18 @@ function renderTabla(profesor) {
   const promedio = alumno.calificaciones.length === 0
   ? 'Sin calificaciones'
   : (alumno.calificaciones.reduce((sum, n) => sum + n, 0) / alumno.calificaciones.length).toFixed(2);
+    const clasePromedio = promedio === 'Sin calificaciones'
+        ? ''
+        : parseFloat(promedio) < 7
+          ? 'promedio-bajo'
+          : 'promedio-alto';
+          
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td data-label="Alumno">${alumno.nombre}</td>
       <td data-label="Materia">${profesor.materia}</td>
       <td data-label="Calificaciones">${alumno.calificaciones.length > 0 ? alumno.calificaciones.join(', ') : 'Sin calificaciones'}</td>
-      <td data-label="Promedio" class="text-center">${promedio}</td>
+      <td data-label="Promedio" class="text-center ${clasePromedio}">${promedio}</td>
       <td data-label="Acciones" class="text-left">
          <div class="d-flex gap-1">
             <button class="btn-icon btn-edit" title="Editar" data-id="${alumno.id}">

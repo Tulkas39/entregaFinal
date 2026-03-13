@@ -405,6 +405,16 @@ footer section p{
     font-size: 0.85rem !important;
     }
 
+.promedio-bajo {
+  color: red !important;
+  font-weight: bold !important;
+}
+
+.promedio-alto {
+  color: blue !important;
+  font-weight: bold !important;
+}
+
 /* Media Query aplicado a Index y a Oferta Educativa*/
 
 @media (max-width: 1024px) {
